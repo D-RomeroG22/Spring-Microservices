@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    discovery:  # Habilitación del Discovery Client para el descubrimiento de servicios
+        enabled: true
+    gateway:
+      routes:  # Definición de rutas del gateway
+        - id: estudiantes
+          uri: 'http://localhost:8090'  # Uso del nombre del servicio para routing dinámico
+          predicates:
+            - Path=/api/student/**
+        - id: cursos
+          uri: 'http://localhost:9090'  # Uso del nombre del servicio para routing dinámico
+          predicates:
+            - Path=/api/course/**
+# Registro del cliente Eureka deshabilitado (si no usas Eureka)
+eureka:
+  client:
+    register-with-eureka: false
